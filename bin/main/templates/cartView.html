@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Cart</title>
+</head>
+<body>
+	<h1>カート</h1>
+	<form action="/Shopping" th:object="${cart}">
+		<ul>
+ 		<li th:each="order : ${cart.orderList}">
+ 			<span th:text="${itemList[order.itemId].name} + ' 価格：' + ${itemList[order.itemId].price} + '円 '
+			 		+ ' 数量：' + ${order.num} + ' 小計：' + ${itemList[order.itemId].price}*${order.num} + '円 '"></span>
+			<span hidden th:text="${cart.operateTotalPrice(itemList[order.itemId].price*order.num)}"></span>
+	 	</li>
+	 	</ul>
+		<span th:text="'合計：' + *{totalPrice} + '円'"></span>
+	 	<br/>
+	 	<input type="submit" value="商品一覧に戻る" />
+	 </form>
+</body>
+</html>
