@@ -4,6 +4,7 @@ public class ListForm {
 
   private int itemId;
   private int num;
+  private int price;
 
   public int getItemId() {
 	  return this.itemId;
@@ -19,6 +20,14 @@ public class ListForm {
 
   public void setNum(int num){
 	  this.num = num;
+  }
+
+  public int getPrice(){
+	  return this.price;
+  }
+
+  public void setPrice(int price){
+	  this.price = price;
   }
 
 }

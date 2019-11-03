@@ -38,11 +38,28 @@ public class Cart {
 	  return this.totalPrice;
   }
 
-  public int operateTotalPrice(int price) {
-	  totalPrice += price;
+  public int operateTotalPrice() {
 
-	  return totalPrice;
+	  if(orderList != null) {
+		  for(Order orders : orderList) {
+			  totalPrice += orders.getPrice()*orders.getNum();
+		  }
+		  return totalPrice;
+	  }else {
+		  return 0;
+	  }
+
   }
+
+  public void deleteOrder(int itemId) {
+
+    for(int i=0; i<orderList.size(); i++) {
+      if(orderList.get(i).getItemId() == itemId){
+          orderList.remove(i);
+      }
+    }
+  }
+
 }
 
 

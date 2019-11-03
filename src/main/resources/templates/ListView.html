@@ -6,29 +6,18 @@
 </head>
 <body>
 	<h1>商品一覧</h1>
-	<form action="#" th:action="@{/order}" th:object="${listForm}" method="POST">
-		<input type="hidden" name="itemId" th:value=1 />
-		<span th:text="${itemList[1].getName()} + '  価格' + ${itemList[1].getPrice()} + '円'"></span>
-		<select th:name="num">
-			<option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}"></option>
-		</select>
-		<input type="submit" value="カートに追加" />
-	</form>
-	<form action="#" th:action="@{/order}" th:object="${listForm}" method="POST">
-		<input type="hidden" name="itemId" th:value=2 />
-		<span th:text="${itemList[2].getName()} + '  価格' + ${itemList[2].getPrice()} + '円'"></span>
-		<select th:name="num">
-			<option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}"></option>
-		</select>
-		<input type="submit" value="カートに追加" />
-	</form>
-	<form action="#" th:action="@{/order}" th:object="${listForm}" method="POST">
-		<input type="hidden" name="itemId" th:value=3 />
-		<span th:text="${itemList[3].getName()} + '  価格' + ${itemList[3].getPrice()} + '円'"></span>
-		<select th:name="num">
-			<option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}"></option>
-		</select>
-		<input type="submit" value="カートに追加" />
-	</form>
+	<ul>
+	<li th:each="item : ${itemList}">
+		<form action="#" th:action="@{/order}" th:object="${listForm}" method="POST">
+			<input type="hidden" name="itemId" th:value="${item.value.itemId}" />
+			<input type="hidden" name="price" th:value="${item.value.price}" />
+			<span th:text="${item.value.name} + '  価格' + ${item.value.price} + '円'"></span>
+			<select th:name="num">
+				<option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}"></option>
+			</select>
+			<input type="submit" value="カートに追加" />
+		</form>
+	</li>
+	</ul>
 </body>
 </html>

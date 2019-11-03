@@ -4,10 +4,12 @@ public class Order {
 
   private int itemId;
   private int num;
+  private int price;
 
-  public Order(int itemId, int num) {
+  public Order(int itemId, int num, int price) {
 	  this.itemId = itemId;
 	  this.num = num;
+	  this.price = price;
   }
 
   public int getItemId(){
@@ -24,6 +26,14 @@ public class Order {
 
   public void setNum(int num){
 	  this.num = num;
+  }
+
+  public int getPrice(){
+	  return price;
+  }
+
+  public void setPrice(int price){
+	  this.price = price;
   }
 
 }

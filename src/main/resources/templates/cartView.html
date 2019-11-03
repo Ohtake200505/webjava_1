@@ -6,15 +6,18 @@
 </head>
 <body>
 	<h1>カート</h1>
-	<form action="/Shopping" th:object="${cart}">
-		<ul>
- 		<li th:each="order : ${cart.orderList}">
+	<ul>
+	<li th:each="order : ${cart.orderList}">
+ 		<form action="#" th:action="@{/DeleteOrder}" th:object="${deleteForm}" method="POST">
+			<input type="hidden" name="itemId" th:value="${order.itemId}" />
  			<span th:text="${itemList[order.itemId].name} + ' 価格：' + ${itemList[order.itemId].price} + '円 '
-			 		+ ' 数量：' + ${order.num} + ' 小計：' + ${itemList[order.itemId].price}*${order.num} + '円 '"></span>
-			<span hidden th:text="${cart.operateTotalPrice(itemList[order.itemId].price*order.num)}"></span>
-	 	</li>
-	 	</ul>
-		<span th:text="'合計：' + *{totalPrice} + '円'"></span>
+		 		+ ' 数量：' + ${order.num} + ' 小計：' + ${itemList[order.itemId].price}*${order.num} + '円 '"></span>
+			<span><input type="submit" value="削除" /></span>
+		</form>
+ 	</li>
+ 	</ul>
+	<form action="/Shopping">
+		<span th:text="'合計：' + ${totalPrice} + '円'"></span>
 	 	<br/>
 	 	<input type="submit" value="商品一覧に戻る" />
 	 </form>

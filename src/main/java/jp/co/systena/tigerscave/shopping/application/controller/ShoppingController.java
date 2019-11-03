@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import jp.co.systena.tigerscave.shopping.application.Cart;
+import jp.co.systena.tigerscave.shopping.application.DeleteForm;
 import jp.co.systena.tigerscave.shopping.application.ListForm;
 import jp.co.systena.tigerscave.shopping.application.ListService;
 import jp.co.systena.tigerscave.shopping.application.Order;
@@ -23,46 +24,61 @@ public class ShoppingController {
   ListService listService = new ListService();
   ListForm listForm = new ListForm();
   Cart cart = new Cart();
+  DeleteForm deleteForm = new DeleteForm();
 
 
   @RequestMapping("/Shopping")
-//  public String list(Model model) {
   public ModelAndView list(ModelAndView mav) {
 
-//    model.addAttribute("itemList", listService.getItemList());
-//    model.addAttribute("listForm", listForm);
     mav.addObject("itemList", listService.getItemList());
-    mav.addObject("listForm", listForm);
     mav.setViewName("ListView");
 
-//    return "ListView";
     return mav;
   }
 
   @RequestMapping(value = "/order", method = RequestMethod.POST)
-//  public String oder(HttpSession session, Model model, @Valid ListForm listForm) {
-  public ModelAndView oder(HttpSession session, ModelAndView mav, @Valid ListForm listForm) {
+  public ModelAndView order(HttpSession session, ModelAndView mav, @Valid ListForm listForm, @Valid DeleteForm deleteForm) {
 
-//    model.addAttribute("itemList", listService.getItemList());
     mav.addObject("itemList", listService.getItemList());
 
     int itemId = listForm.getItemId();
     int num = listForm.getNum();
+    int price = listForm.getPrice();
 
-    Order order = new Order(itemId, num);
+    Order order = new Order(itemId, num, price);
     cart.addOrder(order);
     cart.setTotalPrice(0);
     session.setAttribute("cart", cart);
 
     Cart cartSession = (Cart)session.getAttribute("cart");
-//    model.addAttribute("cart", cartSession);
-    mav.addObject("cart", cartSession);
+    int totalPrice = cartSession.operateTotalPrice();
 
+    mav.addObject("cart", cartSession);
+    mav.addObject("totalPrice", totalPrice);
     mav.setViewName("cartView");
 
-//    return "cartView";
     return mav;
   }
+
+  @RequestMapping(value = "/DeleteOrder", method = RequestMethod.POST)
+  public ModelAndView deleteOrder(HttpSession session, ModelAndView mav, @Valid ListForm listForm, @Valid DeleteForm deleteForm) {
+
+    mav.addObject("itemList", listService.getItemList());
+
+    int itemId = deleteForm.getItemId();
+
+    Cart cartSession = (Cart)session.getAttribute("cart");
+    cartSession.deleteOrder(itemId);
+    cartSession.setTotalPrice(0);
+    int totalPrice = cartSession.operateTotalPrice();
+
+    mav.addObject("cart", cartSession);
+    mav.addObject("totalPrice", totalPrice);
+    mav.setViewName("cartView");
+
+    return mav;
+  }
+
 
 }
 
