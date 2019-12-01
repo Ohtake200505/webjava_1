@@ -8,7 +8,7 @@
 	<h1>商品一覧</h1>
 	<ul>
 	<li th:each="item : ${itemList}">
-		<form action="#" th:action="@{/order}" th:object="${listForm}" method="POST">
+		<form action="#" th:action="@{/AddOrder}" th:object="${listForm}" method="POST">
 			<input type="hidden" name="itemId" th:value="${item.value.itemId}" />
 			<input type="hidden" name="price" th:value="${item.value.price}" />
 			<span th:text="${item.value.name} + '  価格' + ${item.value.price} + '円'"></span>
